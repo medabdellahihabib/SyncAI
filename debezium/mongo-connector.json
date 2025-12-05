@@ -1,0 +1,13 @@
+{
+  "name": "syncai-mongo",
+  "config": {
+    "connector.class":"io.debezium.connector.mongodb.MongoDbConnector",
+    "mongodb.hosts":"rs0/mongo:27017",
+    "mongodb.name":"mongo_syncai",
+    "database.include.list":"syncai_db",
+    "collection.include.list":"syncai_db.items",
+    "transforms":"unwrap",
+    "transforms.unwrap.type":"io.debezium.transforms.ExtractNewDocumentState",
+    "value.converter.schemas.enable":"false"
+  }
+}

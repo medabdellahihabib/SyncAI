@@ -1,20 +1,19 @@
 {
-  "name": "syncai-connector",
+  "name": "syncai-postgres",
   "config": {
-    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-    "database.hostname": "postgres",
-    "database.port": "5432",
-    "database.user": "syncai",
-    "database.password": "syncai",
-    "database.dbname": "syncai_db",
-    "database.server.name": "syncai_server",
-    "slot.name": "syncai_slot",
-    "plugin.name": "pgoutput",
-    "publication.name": "syncai_pub",
-    "table.include.list": "public.products",
-    "tombstones.on.delete": false,
-    "value.converter.schemas.enable": false,
-    "transforms": "unwrap",
-    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState"
+    "connector.class":"io.debezium.connector.postgresql.PostgresConnector",
+    "database.hostname":"postgres",
+    "database.port":"5432",
+    "database.user":"syncai",
+    "database.password":"syncai",
+    "database.dbname":"syncai_db",
+    "database.server.name":"pg_syncai",
+    "plugin.name":"pgoutput",
+    "slot.name":"syncai_slot",
+    "publication.name":"syncai_pub",
+    "table.include.list":"public.products",
+    "transforms":"unwrap",
+    "transforms.unwrap.type":"io.debezium.transforms.ExtractNewRecordState",
+    "value.converter.schemas.enable":"false"
   }
 }

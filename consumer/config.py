@@ -1,8 +1,9 @@
 KAFKA_BOOTSTRAP = "kafka:9092"
-TOPIC = "syncai_server.public.products"
+TOPIC_PG = "pg_syncai.public.products"
+TOPIC_MONGO = "mongo_syncai.syncai_db.items"
 QDRANT_HOST = "qdrant"
 QDRANT_PORT = 6333
-COLLECTION_NAME = "products_embeddings"
-
-VECTOR_SIZE = 768  # dim du modèle Nomic (Ollama)
+COLLECTION_NAME = "syncai_collection"
+VECTOR_SIZE = 768
 BATCH_SIZE = 16
+OLLAMA_URL = "http://host.docker.internal:11434/api/embeddings"  # host.docker.internal pour Docker sur Windows
