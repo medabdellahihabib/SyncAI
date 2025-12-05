@@ -1,13 +1,20 @@
 import json
 import asyncio
 from aiokafka import AIOKafkaConsumer
-import pinecone
+from qdrant_client import QdrantClient, models
+
 from config import *
-from embedder import embed_texts
+from embedder import embed_local
 from processor import build_text, build_metadata
 
-pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
-index = pinecone.Index(PINECONE_INDEX)
+# Init Qdrant
+client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
+
+# Create collection if not exists
+client.recreate_collection(
+    collection_name=COLLECTION_NAME,
+    vectors_config=models.VectorParams(size=VECTOR_SIZE, distance=models.Distance.COSINE)
+)
 
 async def consume():
     consumer = AIOKafkaConsumer(
@@ -15,6 +22,7 @@ async def consume():
         bootstrap_servers=KAFKA_BOOTSTRAP,
         group_id="syncai-consumer"
     )
+
     await consumer.start()
     print("Consumer started...")
 
@@ -27,7 +35,7 @@ async def consume():
             text = build_text(data)
             metadata = build_metadata(data)
 
-            batch.append((data["id"], text, metadata))
+            batch.append([data["id"], text, metadata])
 
             if len(batch) >= BATCH_SIZE:
                 await process_batch(batch)
@@ -37,19 +45,24 @@ async def consume():
         await consumer.stop()
 
 async def process_batch(batch):
-    print(f"Processing batch {len(batch)}...")
-    ids = [str(x[0]) for x in batch]
-    texts = [x[1] for x in batch]
-    metas = [x[2] for x in batch]
+    ids = [b[0] for b in batch]
+    texts = [b[1] for b in batch]
+    metadatas = [b[2] for b in batch]
 
-    vectors = embed_texts(texts)
+    embeddings = embed_local(texts)
 
-    items = []
-    for i in range(len(vectors)):
-        items.append((ids[i], vectors[i], metas[i]))
+    points = []
+    for i in range(len(embeddings)):
+        points.append(
+            models.PointStruct(
+                id=str(ids[i]),
+                vector=embeddings[i],
+                payload=metadatas[i]
+            )
+        )
 
-    index.upsert(vectors=items)
-    print(f"Upserted {len(items)} vectors.")
+    client.upsert(collection_name=COLLECTION_NAME, points=points)
+    print(f"Inserted {len(points)} vectors into Qdrant.")
 
 if __name__ == "__main__":
     asyncio.run(consume())

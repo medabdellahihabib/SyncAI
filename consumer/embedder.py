@@ -1,11 +1,17 @@
-from openai import OpenAI
-import os
+import requests
+import json
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+def embed_local(texts):
+    if isinstance(texts, str):
+        texts = [texts]
 
-def embed_texts(texts):
-    response = client.embeddings.create(
-        model="text-embedding-3-small",
-        input=texts
-    )
-    return [x["embedding"] for x in response["data"]]
+    payload = {
+        "model": "nomic-embed-text",
+        "input": texts
+    }
+
+    r = requests.post("http://localhost:11434/api/embeddings", json=payload)
+    data = r.json()
+
+    embeddings = [item["embedding"] for item in data["data"]]
+    return embeddings

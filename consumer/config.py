@@ -1,10 +1,8 @@
-import os
-
-KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP")
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-PINECONE_ENV = os.getenv("PINECONE_ENV")
-PINECONE_INDEX = os.getenv("PINECONE_INDEX")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
+KAFKA_BOOTSTRAP = "kafka:9092"
 TOPIC = "syncai_server.public.products"
+QDRANT_HOST = "qdrant"
+QDRANT_PORT = 6333
+COLLECTION_NAME = "products_embeddings"
+
+VECTOR_SIZE = 768  # dim du modèle Nomic (Ollama)
 BATCH_SIZE = 16
