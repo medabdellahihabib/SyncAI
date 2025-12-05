@@ -1,0 +1,5 @@
+aiokafka
+openai
+pinecone-client
+tenacity
+python-dotenv
