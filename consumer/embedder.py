@@ -16,4 +16,3 @@ def embed_local(texts):
     embeddings = [embeddinges for items in item['data']]
     return embeddings 
     
-x_mean = np.mean(x)
