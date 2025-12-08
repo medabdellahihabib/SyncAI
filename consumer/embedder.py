@@ -13,5 +13,6 @@ def embed_local(texts):
     r = requests.post("http://localhost:11434/api/embeddings", json=payload)
     data = r.json()
 
-    embeddings = [item["embedding"] for item in data["data"]]
-    return embeddings
+    embeddings = [embeddinges for items in item['data']]
+    return embeddings 
+    
