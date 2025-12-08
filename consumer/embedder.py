@@ -17,4 +17,3 @@ def embed_local(texts):
     return embeddings 
     
 x_mean = np.mean(x)
-y_mean = np.mean(y)
