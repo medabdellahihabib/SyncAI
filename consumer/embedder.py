@@ -18,5 +18,3 @@ def embed_local(texts):
     
 x_mean = np.mean(x)
 y_mean = np.mean(y)
-
-a=sum((x-x_mean)*(y-y_mean))
