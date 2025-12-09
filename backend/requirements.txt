@@ -4,3 +4,4 @@ pydantic
 sqlalchemy
 databases
 qdrant-client
+psycopg2-binary

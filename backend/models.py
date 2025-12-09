@@ -1,12 +1,12 @@
-from sqlalchemy import Table, Column, Integer, String, JSON
-from .db import metadata, engine
+from sqlalchemy import Column, Integer, String, JSON
+from sqlalchemy.ext.declarative import declarative_base
 
-sources = Table(
-    "sources", metadata,
-    Column("id", Integer, primary_key=True),
-    Column("name", String, unique=True),
-    Column("type", String),  # postgres, mongo...
-    Column("config", JSON)
-)
+Base = declarative_base()
 
-metadata.create_all(engine)
+class Source(Base):
+    __tablename__ = "sources"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    type = Column(String, nullable=False)
+    config = Column(JSON, nullable=False)
