@@ -59,6 +59,8 @@ services:
     depends_on:
       - kafka
       - qdrant
+    volumes:
+      - ./backend:/app   # <<< important pour éviter l'erreur relative import
 
   frontend:
     build: ./frontend
@@ -69,6 +71,9 @@ services:
 
   consumer:
     build: ./consumer
+    command: ["python", "multi_consumer.py"]  # <<< FIX ici !
+    volumes:
+      - ./consumer:/app
     depends_on:
       - connect
       - qdrant
@@ -76,4 +81,3 @@ services:
 
 volumes:
   mongo-data:
-

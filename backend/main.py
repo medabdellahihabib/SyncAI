@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from .crud import list_sources, add_source
+from crud import list_sources, add_source
+
 
 app = FastAPI()
 

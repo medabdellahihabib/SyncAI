@@ -2,6 +2,7 @@ from sqlalchemy import select, insert
 from .db import engine
 from .models import sources
 
+
 def list_sources():
     with engine.connect() as conn:
         res = conn.execute(select([sources]))
