@@ -7,10 +7,9 @@ from config import *
 from embedder import embed_local
 from processor import build_text, build_metadata
 
-# Init Qdrant
 client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
 
-# Create collection if not exists
+
 client.recreate_collection(
     collection_name=COLLECTION_NAME,
     vectors_config=models.VectorParams(size=VECTOR_SIZE, distance=models.Distance.COSINE)

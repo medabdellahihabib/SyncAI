@@ -12,5 +12,4 @@ engine = create_engine(
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# create tables
 Base.metadata.create_all(bind=engine)

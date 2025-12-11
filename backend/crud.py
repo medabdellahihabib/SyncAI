@@ -6,8 +6,6 @@ from models import Source
 
 
 
-
-
 def list_sources():
     with engine.connect() as conn:
         res = conn.execute(select(Source))
