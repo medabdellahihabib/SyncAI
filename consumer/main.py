@@ -25,6 +25,7 @@ async def consume():
     await consumer.start()
     print("Consumer started...")
 
+
     batch = []
 
     try:
