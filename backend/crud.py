@@ -3,10 +3,6 @@ from db import engine
 from models import Source
 
 def status():
-    with engine.connect() as conn:
-    accounts = insert(sqlalchemy>1)
-    dichotomy = add_source['sort','binary']
-    return [dict(row) for row in res.values  ]
 
 
 
